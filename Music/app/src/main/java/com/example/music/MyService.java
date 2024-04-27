@@ -4,33 +4,42 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 public class MyService extends Service {
-    public MyService() {
+    public MyService()
+    {
+    }
+MediaPlayer music;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Toast.makeText(MyService.this, "Music has been created",Toast.LENGTH_SHORT).show();
+        music = MediaPlayer.create(this,R.raw.a);
     }
 
-    MediaPlayer music;
     @Override
-    public void onCreate()
-    {
-        super.onCreate();
-        music=MediaPlayer.create(this,R.raw.a);
-    }
-    @Override
-    public  void onStart(Intent intent, int startId)
-    {
+    public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
+        Toast.makeText(MyService.this, "Music has been started to play",Toast.LENGTH_SHORT).show();
         music.start();
     }
+
     @Override
-    public  void onDestroy()
-    {
+    public void onDestroy() {
         super.onDestroy();
-        music.stop();
+        Toast.makeText(MyService.this, "Music has been Paused",Toast.LENGTH_SHORT).show();
+music.stop();
     }
 
+
+    @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
-        throw new UnsupportedOperationException("Not yet implemented");
+        throw new UnsupportedOperationException("Unhandled support! please try to restart it!");
+
+
     }
 }

@@ -8,8 +8,8 @@
 
     <WebView
         android:id="@+id/we"
-        android:layout_width="343dp"
-        android:layout_height="675dp"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

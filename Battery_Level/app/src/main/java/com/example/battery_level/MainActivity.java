@@ -11,42 +11,56 @@ import android.graphics.Color;
 import android.media.tv.BroadcastInfoRequest;
 import android.os.BatteryManager;
 import android.os.Bundle;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
 
-ProgressBar p;
+public class MainActivity extends AppCompatActivity {
 TextView t;
+ProgressBar p;
 BroadcastReceiver b;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+t= findViewById(R.id.t);
 p=findViewById(R.id.p);
-t=findViewById(R.id.t);
 b= new BroadcastReceiver() {
     @Override
     public void onReceive(Context context, Intent intent) {
         int level= intent.getIntExtra(BatteryManager.EXTRA_LEVEL,0);
-        t.setText("The Battery level is :"+level);
         p.setProgress(level);
-        ConstraintLayout cl = findViewById(R.id.cl);
-        if( level>70)
+        t.setText("BATTERY_LEVEL IS :"+level);
+        ConstraintLayout cl  =findViewById(R.id.cl);
+
+        if ( level>80)
         {
             cl.setBackgroundColor(Color.GREEN);
         }
-        else {
+        else if (level>40)
+        {
+            cl.setBackgroundColor(Color.YELLOW);
+
+        }
+        else
+
+        {
             cl.setBackgroundColor(Color.RED);
         }
-}
-    };
+
+    }
+};
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        registerReceiver(b,new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        registerReceiver(b, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
 
     }
 
@@ -56,4 +70,6 @@ b= new BroadcastReceiver() {
         unregisterReceiver(b);
     }
 }
+
+
 
