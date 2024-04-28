@@ -37,10 +37,8 @@ public class MainActivity2 extends AppCompatActivity {
         emailTextView.setText("Email: " + email);
         mobileTextView.setText("Mobile: " + mobile);
         genderTextView.setText("Gender: " + gender);
-
-        if (imageUriString != null) {
             Uri imageUri = Uri.parse(imageUriString);
             imageView.setImageURI(imageUri);
-        }
+
     }
 }

@@ -64,9 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("email", email);
                 intent.putExtra("mobile", mobile);
                 intent.putExtra("gender", gender);
-                if (imageUri != null) {
+
                     intent.putExtra("imageUri", imageUri.toString());
-                }
                 startActivity(intent);
             }
         });
@@ -82,14 +81,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageUri = data.getData();
             try {
                 imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri));
+
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+
         }
     }
 }
