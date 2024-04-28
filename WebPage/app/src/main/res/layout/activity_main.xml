@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EFF4EE"
     tools:context=".MainActivity">
 
     <Button
@@ -20,24 +21,27 @@
         android:id="@+id/b2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter the Url"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.263" />
-
-    <TextView
-        android:id="@+id/t1"
-        android:layout_width="338dp"
-        android:layout_height="56dp"
-        android:hint="Enter the URL"
+        android:text="URL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.113" />
+        app:layout_constraintVertical_bias="0.31" />
+
+    <EditText
+        android:id="@+id/e1"
+        android:layout_width="304dp"
+        android:layout_height="52dp"
+        android:ems="10"
+        android:hint="Enter the URL"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.178" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

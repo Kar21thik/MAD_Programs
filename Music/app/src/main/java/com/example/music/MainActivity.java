@@ -25,25 +25,28 @@ b1=findViewById(R.id.b1);
 b2=findViewById(R.id.b2);
 b3=findViewById(R.id.b3);
 
+
 b1.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        startService(new Intent(MainActivity.this, MyService.class));
-
+        ConstraintLayout cl = findViewById(R.id.cl);
+        Random Rand= new Random();
+        cl.setBackgroundColor(Color.rgb(Rand.nextInt(255),Rand.nextInt(255),Rand.nextInt(255)));
     }
 });
+
 b2.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        stopService(new Intent(MainActivity.this,MyService.class));
+        startService(new Intent(MainActivity.this, MyService.class));
     }
 });
 b3.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        ConstraintLayout cl= findViewById(R.id.cl);
-        Random rand = new Random();
-        cl.setBackgroundColor(Color.rgb(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+        stopService(new Intent(MainActivity.this, MyService.class));
+
     }
 });
+
     }}
