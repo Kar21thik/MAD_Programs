@@ -19,49 +19,42 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 TextView t;
-ProgressBar p;
 BroadcastReceiver b;
+
+ProgressBar p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-t= findViewById(R.id.t);
+t=findViewById(R.id.t);
 p=findViewById(R.id.p);
-b= new BroadcastReceiver() {
+b=new BroadcastReceiver() {
     @Override
     public void onReceive(Context context, Intent intent) {
         int level= intent.getIntExtra(BatteryManager.EXTRA_LEVEL,0);
         p.setProgress(level);
-        t.setText("BATTERY_LEVEL IS :"+level);
-        ConstraintLayout cl  =findViewById(R.id.cl);
-
-        if ( level>80)
+        t.setText("Battery level is:"+level);
+        ConstraintLayout cl = findViewById(R.id.cl);
+        if(level>80)    
         {
             cl.setBackgroundColor(Color.GREEN);
         }
-        else if (level>40)
-        {
+        else if (level>50){
             cl.setBackgroundColor(Color.YELLOW);
-
         }
         else
-
         {
             cl.setBackgroundColor(Color.RED);
         }
-
     }
 };
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         registerReceiver(b, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-
-
     }
 
     @Override
@@ -70,6 +63,3 @@ b= new BroadcastReceiver() {
         unregisterReceiver(b);
     }
 }
-
-
-

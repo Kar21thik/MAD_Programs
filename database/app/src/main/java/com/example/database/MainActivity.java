@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,9 +27,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
- EditText e1,e2,e3;
-TextView t1;
- Button b1,b2;
+EditText e1,e2,e3;
+Button b1,b2;
+TextView textView;
 SQLiteDatabase sqLiteDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,53 +40,49 @@ SQLiteDatabase sqLiteDatabase;
         e3=findViewById(R.id.e3);
         b1=findViewById(R.id.b1);
         b2=findViewById(R.id.b2);
-        t1=findViewById(R.id.t1);
-        sqLiteDatabase = openOrCreateDatabase("PersonDb",MODE_PRIVATE,null);
-        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Person(Name TEXT ,Age INTEGER, Address TEXT)");
-
+        textView=findViewById(R.id.textView);
+        sqLiteDatabase = openOrCreateDatabase("PersonDB",MODE_PRIVATE,null);
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS Person(Name TEXT, Age TEXT,Phone TEXT)");
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String name = e1.getText().toString();
-                int age = Integer.parseInt(e2.getText().toString());
-                String address = e3.getText().toString();
+                String age = e2.getText().toString();
+                String phone = e3.getText().toString();
 
                 ContentValues values = new ContentValues();
                 values.put("Name",name);
                 values.put("Age",age);
-                values.put("Address",address);
-                long result= sqLiteDatabase.insert("Person",null,values);
-
-                if ( result!=-1)
+                values.put("Phone",phone);
+                long result = sqLiteDatabase.insert("Person",null,values);
+                if (result!=-1)
                 {
-                    Toast.makeText(MainActivity.this, "Successfully added to the database",Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(MainActivity.this, "Succcessfully added to the database", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Error in  adding to the database",Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Error in  adding to the database", Toast.LENGTH_LONG).show();
+
                 }
-
-
-
-
             }
         });
-
         b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM Person", null);
-                StringBuilder stringBuilder = new StringBuilder();
-                if(cursor.moveToFirst())
+                String u= e2.getText().toString();
+                Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM  Person WHERE Usn=?",new String[]{u});
+                if (cursor.getCount()!=1)
                 {
-                    do {
-                        stringBuilder.append("Name:").append(cursor.getString(0)).append(",");
-                        stringBuilder.append("Age:").append(cursor.getString(1)).append(",");
-                        stringBuilder.append("Address:").append(cursor.getString(2)).append("\n");
-                    }while( cursor.moveToNext());
+                    Toast.makeText(MainActivity.this, "Error Ocuured", Toast.LENGTH_SHORT).show();
                 }
-                Toast.makeText(MainActivity.this, stringBuilder, Toast.LENGTH_LONG).show();
-                t1.setText(stringBuilder);
+                else {
+                    cursor.moveToNext();
+                    String ph= cursor.getString(2);
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel"+ph));
+                    startActivity(intent);
+                }
             }
         });
+
+
     }}

@@ -17,77 +17,52 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText nameEditText;
-    private EditText emailEditText;
-    private EditText mobileEditText;
-    private RadioGroup genderRadioGroup;
-    private ImageView imageView;
+ private EditText e1;
+    private   EditText e2;
+    private   EditText e3;
+    private   EditText e4;
+    private  RadioGroup r;
     private String name;
     private String email;
-    private String mobile;
-    private String gender;
-    private static final int PICK_IMAGE_REQUEST = 1;
-    private Uri imageUri;
+    private String phone;
+    private String quaili;
 
+    Button b1,b2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+e1=findViewById(R.id.e1);
+        e2=findViewById(R.id.e2);
+        e3=findViewById(R.id.e3);
+        e4=findViewById(R.id.e4);
 
-        nameEditText = findViewById(R.id.nameEditText);
-        emailEditText = findViewById(R.id.emailEditText);
-        mobileEditText = findViewById(R.id.mobileEditText);
-        genderRadioGroup = findViewById(R.id.genderRadioGroup);
-        imageView = findViewById(R.id.imageView);
+        r=findViewById(R.id.r);
+        b1=findViewById(R.id.b1);
+        b2=findViewById(R.id.b2);
 
-        Button uploadButton = findViewById(R.id.uploadButton);
-        uploadButton.setOnClickListener(new View.OnClickListener() {
+
+        b2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openGallery();
+                Intent i = new Intent(MainActivity.this, MainActivity2.class);
+                 name= e1.getText().toString();
+                 email = e2.getText().toString();
+                 phone = e3.getText().toString();
+                 quaili = e4.getText().toString();
+                int select = r.getCheckedRadioButtonId();
+                RadioButton rb= findViewById(select);
+                String gender= rb.getText().toString();
+
+                i.putExtra("Name",name);
+                i.putExtra("email",email);
+                i.putExtra("Phone",phone);
+                i.putExtra("Quaili",quaili);
+                startActivity(i);
             }
         });
 
-        Button nextButton = findViewById(R.id.nextButton);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name = nameEditText.getText().toString();
-                email = emailEditText.getText().toString();
-                mobile = mobileEditText.getText().toString();
-                int selectedId = genderRadioGroup.getCheckedRadioButtonId();
-                RadioButton genderRadioButton = findViewById(selectedId);
-                gender = genderRadioButton.getText().toString();
-
-                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                intent.putExtra("name", name);
-                intent.putExtra("email", email);
-                intent.putExtra("mobile", mobile);
-                intent.putExtra("gender", gender);
-
-                    intent.putExtra("imageUri", imageUri.toString());
-                startActivity(intent);
-            }
-        });
     }
 
-    private void openGallery() {
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-            imageUri = data.getData();
-            try {
-                imageView.setImageBitmap(MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-
-        }
-    }
-}

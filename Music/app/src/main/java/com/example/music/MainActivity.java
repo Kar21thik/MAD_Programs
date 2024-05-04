@@ -38,15 +38,14 @@ b1.setOnClickListener(new View.OnClickListener() {
 b2.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        startService(new Intent(MainActivity.this, MyService.class));
+        startService(new Intent(MainActivity.this,MyService.class));
     }
 });
+
 b3.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        stopService(new Intent(MainActivity.this, MyService.class));
-
+        startService(new Intent(MainActivity.this,MyService.class));
     }
 });
-
     }}
